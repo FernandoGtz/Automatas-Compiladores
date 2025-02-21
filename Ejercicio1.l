@@ -1,3 +1,4 @@
+/* Identifica enteros y operadores */
 %option noyywrap
 %{
 #include <stdio.h>

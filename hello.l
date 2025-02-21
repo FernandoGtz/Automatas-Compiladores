@@ -1,3 +1,4 @@
+/* Classic Hello World! */
 %option noyywrap
 %{
 #include<stdio.h>

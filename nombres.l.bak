@@ -1,15 +1,16 @@
+/* Nombres Propios (inician con mayuscula o son todos mayusculas)
 %option noyywrap
 %{
 #include <stdio.h>
 %}
 
-/* Definir la expresiÛn regular para nombres propios */
+/* Definir la expresi√≥n regular para nombres propios */
 NAME    [A-Z][a-z]+   
 
 %%
 
 {NAME}   { printf("Nombre propio: %s\n", yytext); }
-.|\n     { /* Ignorar cualquier otro car·cter */ }
+.|\n     { /* Ignorar cualquier otro car√°cter */ }
 
 %%
 

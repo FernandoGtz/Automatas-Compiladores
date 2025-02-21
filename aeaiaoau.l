@@ -1,3 +1,4 @@
+/* Cadenas que contienen ae, ai, ao, au */
 %option noyywrap
 %{
 #include <stdio.h>
@@ -8,7 +9,7 @@ MATCH  ([a-z]*ae[a-z]*)|([a-z]*ai[a-z]*)|([a-z]*ao[a-z]*)|([a-z]*au[a-z]*)
 
 %%
 {MATCH}    printf("Palabra encontrada: %s\n", yytext);
-{ALPHA}    /* Ignorar palabras que no cumplen el patrón */
+{ALPHA}    /* Ignorar palabras que no cumplen el patrÃ³n */
 .          /* Ignorar cualquier otro caracter */
 %%
 

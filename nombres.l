@@ -1,4 +1,4 @@
-/* Nombres Propios (inician con mayuscula o son todos mayusculas)
+/* Nombres Propios (inician con mayuscula o son todos mayusculas) */
 %option noyywrap
 %{
 #include <stdio.h>

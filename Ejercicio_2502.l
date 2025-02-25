@@ -1,3 +1,4 @@
+/*  Detectar textos, números, operadores aritméticos, espacios en blanco y saltos de línea */
 %option noyywrap
 %{
 	#include <stdio.h>
@@ -8,7 +9,7 @@
 [0-9]+       { printf("Number: %s\n", yytext); }
 [+\-*/]      { printf("Operator: %s\n", yytext); }
 [ \t]+       { printf("Whitespace\n"); }  /* Espacios y tabulaciones */
-\n           { printf("Newline\n"); }  /* Salto de l�nea */
+\n           { printf("Newline\n"); }  /* Salto de línea */
 .            { printf("Unknown: %s\n", yytext); }
 %%
 

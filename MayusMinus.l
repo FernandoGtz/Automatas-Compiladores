@@ -1,3 +1,4 @@
+/* Conversion de Mayusculas a Minusculas */
 %option noyywrap
 %{
 #include <stdio.h>
@@ -8,7 +9,7 @@ FILE *out; // Archivo de salida
 
 %%
 
-[A-Z]   { fputc(tolower(yytext[0]), out); } // Convierte mayúsculas a minúsculas
+[A-Z]   { fputc(tolower(yytext[0]), out); } // Convierte mayÃºsculas a minÃºsculas
 .       { fputc(yytext[0], out); } // Copia otros caracteres sin cambios
 
 %%
@@ -33,11 +34,11 @@ int main(int argc, char *argv[]) {
     }
 
     yyin = in;  // Establece el archivo de entrada para Flex
-    yylex();    // Ejecuta el análisis léxico
+    yylex();    // Ejecuta el anÃ¡lisis lÃ©xico
 
     fclose(in);
     fclose(out);
 
-    printf("Conversión completada. Texto guardado en %s\n", argv[2]);
+    printf("Conversion completada. Texto guardado en %s\n", argv[2]);
     return 0;
 }

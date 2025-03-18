@@ -7,9 +7,8 @@
 
 %%
 
-"https://"[a-zA-Z0-9.-]+    { return URL_VALIDA; }
-"http://"[a-zA-Z0-9.-]+     { return URL_VALIDA; }
-.                         { return URL_INVALIDA; }
+"https://www"[a-zA-Z0-9.-]+\.(com|mx|edu|org|net|es)    { return URL_VALIDA; }
+"http://www"[a-zA-Z0-9.-]+\.(com|mx|edu|org|net|es)     { return URL_VALIDA; }
+.                                                     { return URL_INVALIDA; }
 
 %%
-

@@ -1,34 +1,78 @@
 %{
 #include <stdio.h>
-int comment_count = 0;
-%}
+#include <string.h>
 
-%%
-if|else|while|for|return|int|float|char|void      { printf("Palabra reservada: %s\n", yytext); }
-"//".*             { printf("Comentario encontrado: %s\n", yytext); comment_count++; }
-"/*"([^*]|"*"+[^*/])*"*/" { printf("Comentario encontrado: %s\n", yytext); comment_count++; }
-cout<<.*<<endl;              { printf("Texto impreso: %s\n", yytext); }
-[a-zA-Z_][a-zA-Z0-9_]*     { printf("Identificador: %s\n", yytext); }
-[+\-*/%]                   { printf("Operador aritmetico: %s\n", yytext); }
-&&|\|\||!                  { printf("Operador logico: %s\n", yytext); }
-[ \t\n]                     { /* Ignorar */ }
-.                           
-%%
+int count_poter = 0;
+int count_potter = 0;
+FILE *output_file;
 
-int main(int argc, char **argv) {
-    if (argc > 1) {
-        FILE *file = fopen(argv[1], "r");
-        if (!file) {
-            perror("Error al abrir el archivo");
-            return 1;
-        }
-        yyin = file;
+// Función para comparar y corregir
+int comparar_y_corregir(const char* palabra) {
+    char cad1[] = "Potter";
+    char cad2[] = "POTTER";
+    char cad3[] = "Poter";
+    char cad4[] = "POTER";
+
+    if (strcmp(palabra, cad1) == 0 || strcmp(palabra, cad2) == 0) {
+        // Si es 'Potter' o 'POTTER', no hacer nada
+        return 0;
+    } else if (strcmp(palabra, cad3) == 0 || strcmp(palabra, cad4) == 0) {
+        // Si es 'Poter' o 'POTER', corregir a 'Potter'
+        return 1;
     }
-    yylex();
-    printf("Total de comentarios encontrados: %d\n", comment_count);
     return 0;
 }
 
-int yywrap() {
-    return 1;
+%}
+
+%%
+
+"Poter"   { 
+            count_poter++; 
+            // Corregir 'Poter' a 'Potter'
+            if (comparar_y_corregir(yytext)) {
+                fprintf(output_file, "Potter");
+            }
+          }
+"Potter"  { 
+            count_potter++; 
+            fprintf(output_file, "Potter");  // Escribir 'Potter' tal cual en el archivo de salida
+          }
+.|\n      { fprintf(output_file, "%s", yytext); }  // Imprimir cualquier otro carácter tal cual
+
+%%
+
+int main(int argc, char **argv) {
+    FILE *file;
+    if (argc > 1) {
+        file = fopen(argv[1], "r");
+        if (file == NULL) {
+            printf("No se puede abrir el archivo.\n");
+            return 1;
+        }
+        yyin = file;
+    } else {
+        printf("Por favor, ingresa el nombre del archivo.\n");
+        return 1;
+    }
+    
+    output_file = fopen("El_Prisionero_de_Azkaban_corregido.txt", "w");  // Abrir archivo de salida
+    if (output_file == NULL) {
+        printf("No se puede crear el archivo de salida.\n");
+        return 1;
+    }
+    
+    yylex();  // Ejecuta el analizador léxico
+    
+    printf("Palabras 'Poter' encontradas: %d\n", count_poter);
+    printf("Palabras 'Potter' encontradas: %d\n", count_potter);
+    printf("Corrigiendo la palabra 'Poter' por 'Potter'...");
+
+    fclose(file);
+    fclose(output_file);
+    return 0;
+}
+
+int yywrap(void) {
+    return 1;  // Indica que no hay más archivos para procesar
 }

@@ -11,9 +11,9 @@
 
     Emotion emotions[] = {
         {"Amor", 0},
-        {"Alegr韆", 0},
+        {"Alegria", 0},
         {"Esperanza", 0},
-        {"蓌ito", 0},
+        {"Exito", 0},
         {"Tristeza", 0},
         {"Miedo", 0},
         {"Enojo", 0},
@@ -22,7 +22,7 @@
     
     #define NUM_EMOTIONS (sizeof(emotions) / sizeof(emotions[0]))
 
-    // Funci髇 para comparar emociones por conteo (para qsort)
+    // Funci贸n para comparar emociones por conteo (para qsort)
     int compare_emotions(const void *a, const void *b) {
         Emotion *emotionA = (Emotion *)a;
         Emotion *emotionB = (Emotion *)b;
@@ -35,16 +35,16 @@
 
 %%
 
-querer|amar|cari駉|ternura|admiraci髇|afecto  { emotions[0].count++; fprintf(outputFile, "Amor\n"); }
-feliz|contento|entusiasmo|risa|euforia|placer { emotions[1].count++; fprintf(outputFile, "Alegr韆\n"); }
-optimismo|confianza|ilusi髇|motivaci髇|inspirador { emotions[2].count++; fprintf(outputFile, "Esperanza\n"); }
-logro|triunfo|superaci髇|avanzar|ganar|orgullo { emotions[3].count++; fprintf(outputFile, "蓌ito\n"); }
-llanto|soledad|vac韔|desesperaci髇|p閞dida|dolor { emotions[4].count++; fprintf(outputFile, "Tristeza\n"); }
-temor|angustia|inseguridad|p醤ico|horror|amenaza { emotions[5].count++; fprintf(outputFile, "Miedo\n"); }
-ira|odio|rabia|resentimiento|frustraci髇|venganza { emotions[6].count++; fprintf(outputFile, "Enojo\n"); }
-fracaso|depresi髇|p閞dida|humillaci髇|rechazo { emotions[7].count++; fprintf(outputFile, "Derrota\n"); }
+querer|amar|cari帽o|ternura|admiraci贸n|afecto  { emotions[0].count++; fprintf(outputFile, "%s\n", yytext); }
+feliz|contento|entusiasmo|risa|euforia|placer { emotions[1].count++; fprintf(outputFile, "%s\n", yytext); }
+optimismo|confianza|ilusi贸n|motivaci贸n|inspirador { emotions[2].count++; fprintf(outputFile, "%s\n", yytext); }
+logro|triunfo|superaci贸n|avanzar|ganar|orgullo { emotions[3].count++; fprintf(outputFile, "%s\n", yytext); }
+llanto|soledad|vac铆o|desesperaci贸n|p茅rdida|dolor { emotions[4].count++; fprintf(outputFile, "%s\n", yytext); }
+temor|angustia|inseguridad|p谩nico|horror|amenaza { emotions[5].count++; fprintf(outputFile, "%s\n", yytext); }
+ira|odio|rabia|resentimiento|frustraci贸n|venganza { emotions[6].count++; fprintf(outputFile, "%s\n", yytext); }
+fracaso|depresi贸n|p茅rdida|humillaci贸n|rechazo { emotions[7].count++; fprintf(outputFile, "%s\n", yytext); }
 
-[\n ]+  ; // Ignorar espacios y saltos de l韓ea
+[\n ]+  ; // Ignorar espacios y saltos de l铆nea
 .       ; // Ignorar otros caracteres
 
 %%
@@ -63,7 +63,7 @@ int main() {
         return 1;
     }
 
-    yylex(); // Ejecutar el an醠isis l閤ico
+    yylex(); // Ejecutar el an谩lisis l茅xico
 
     fclose(yyin);
     fclose(outputFile);
@@ -71,13 +71,13 @@ int main() {
     // Ordenar emociones por conteo
     qsort(emotions, NUM_EMOTIONS, sizeof(Emotion), compare_emotions);
 
-    // Imprimir las 10 emociones m醩 repetidas
+    // Imprimir las 10 emociones m谩s repetidas
     printf("\nTop 10 emociones mas repetidas:\n");
     int i;
     for (i = 0; i < NUM_EMOTIONS && i < 10; i++) {
         printf("%s: %d\n", emotions[i].emotion, emotions[i].count);
     }
-    printf("Guardando emociones en 'El_Prisionero_de_Azkaban_Emociones.txt'...");
+    printf("Guardando las emociones en 'El_Prisionero_de_Azkaban_Emociones.txt...'");
 
     return 0;
 }
